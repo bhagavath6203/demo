@@ -1,0 +1,4 @@
+.sunrise-bg {
+  background: linear-gradient(to bottom right, #ff6e7f, #ffd166); /* Adjust the color codes as per your preference */
+  height: 100vh; /* Set the height to 100% of the viewport height */
+}
