@@ -6,39 +6,39 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const path = require("path");
 
-//dot config
+// Dotenv config
 dotenv.config();
 
-//mangodb connection
-
+// MongoDB connection
 connectDB();
 
-// rest objects
-const app =express();
+// Create Express app
+const app = express();
 
-//middleswares
+// Middleware
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-
-// routes
-// 1st route[]
+// Routes
 app.use("/api/v1/test", require("./routes/testRoutes"));
 app.use("/api/v1/auth", require("./routes/authRoutes"));
 
+// Serve static files from the 'build' directory
+app.use(express.static(path.join(__dirname, "client", "build")));
 
-//static folder
-app.use(express.static(path.join(__dirname,'./client/build')));
-
-//static routes
-app.get('*', function(req,res){
-    res.sendFile(path.join(__dirname,'./client/build/index.html'));
+// Serve 'index.html' for any other routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
-//port
+
+// Define port
 const PORT = process.env.PORT || 8080;
 
-//listen
+// Listen
 app.listen(PORT, () => {
-    console.log(`Node server Running in ${process.env.DEV_MODE} mode on port ${process.env.PORT}`.bgBlue.white);
+  console.log(
+    `Node server running in ${process.env.DEV_MODE} mode on port ${PORT}`.bgBlue
+      .white
+  );
 });
